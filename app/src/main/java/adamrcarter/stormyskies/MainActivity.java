@@ -33,8 +33,11 @@ import butterknife.InjectView;
 
 public class MainActivity extends ActionBarActivity {
 
-    TextView textLat;
+    TextView textLat; // have this like: TextView textLat = final double latitude = 41.2500; ?
     TextView textLong;
+
+    //not sure how to make the location label display location city (in activity_main.xml,
+    // previously had hardcoded. Set to "--" now
 
     public static final String TAG = MainActivity.class.getSimpleName();
 
@@ -62,7 +65,6 @@ public class MainActivity extends ActionBarActivity {
         LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
         LocationListener ll = new myLocationListener();
         lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, ll);
-
 
 
         mProgressBar.setVisibility(View.INVISIBLE);
