@@ -33,11 +33,18 @@ import butterknife.InjectView;
 
 public class MainActivity extends ActionBarActivity {
 
-    TextView textLat; // have this like: TextView textLat = final double latitude = 41.2500; ?
+    TextView textLat;
     TextView textLong;
 
-    //not sure how to make the location label display location city (in activity_main.xml,
-    // previously had hardcoded. Set to "--" now
+    double mLatitude = 0;
+    double mLongitude = 0;
+
+
+    boolean gps_enabled=false;
+    boolean network_enabled=false;
+
+
+
 
     public static final String TAG = MainActivity.class.getSimpleName();
 
@@ -63,26 +70,68 @@ public class MainActivity extends ActionBarActivity {
         textLong = (TextView)findViewById(R.id.textLong);
 
         LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-        LocationListener ll = new myLocationListener();
-        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, ll);
+        LocationListener ll = new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                if(location != null)
+                {
+                    double pLong = location.getLongitude();
+                    double pLat = location.getLatitude();
+
+                    textLat.setText(Double.toString(pLat));
+                    textLong.setText(Double.toString(pLong));
+
+                    mLongitude = pLong;
+                    mLatitude = pLat;
+                    getForecast(mLatitude, mLongitude);
+                }
+            }
+
+            @Override
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+
+            }
+
+            @Override
+            public void onProviderEnabled(String provider) {
+
+            }
+
+            @Override
+            public void onProviderDisabled(String provider) {
+
+            }
+        };
+
+
+//this code down to before line 23 is new and worked without it
+
+        //exceptions will be thrown if provider is not permitted.
+        try{gps_enabled=lm.isProviderEnabled(LocationManager.GPS_PROVIDER);}catch(Exception ex){}
+        try{network_enabled=lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);}catch(Exception ex){}
+
+
+        if(gps_enabled) {
+              lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 100, ll);
+        if(network_enabled)
+          lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 100, 100, ll);
+
+    }
+       // lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10, 10, ll);
+        // lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10, 10, ll);
+
 
 
         mProgressBar.setVisibility(View.INVISIBLE);
 
-
-        final double latitude = 41.2500;
-        final double longitude = -96.0000;
-
-
         mRefreshImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getForecast(latitude, longitude);
+                getForecast(mLatitude, mLongitude);
             }
         });
 
-
-        getForecast(latitude, longitude);
+        getForecast(mLatitude, mLongitude);
 
         Log.d(TAG, "Main UI code is running!");
 
@@ -218,35 +267,5 @@ public class MainActivity extends ActionBarActivity {
     private void alertUserAboutError() {
         AlertDialogFragment dialog = new AlertDialogFragment();
         dialog.show(getFragmentManager(), "error_dialog");
-    }
-
-    private class myLocationListener implements LocationListener {
-        @Override
-        public void onLocationChanged(Location location) {
-            if(location != null)
-            {
-                double pLong = location.getLongitude();
-                double pLat = location.getLatitude();
-
-                textLat.setText(Double.toString(pLat));
-                textLong.setText(Double.toString(pLong));
-            }
-
-        }
-
-        @Override
-        public void onStatusChanged(String provider, int status, Bundle extras) {
-
-        }
-
-        @Override
-        public void onProviderEnabled(String provider) {
-
-        }
-
-        @Override
-        public void onProviderDisabled(String provider) {
-
-        }
     }
 }
