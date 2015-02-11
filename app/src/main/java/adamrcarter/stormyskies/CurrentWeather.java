@@ -15,6 +15,7 @@ public class CurrentWeather {
     private double mPrecipChance;
     private String mSummary;
     private String mTimeZone;
+    private double mSunriseTime;
 
     public String getTimeZone() {
         return mTimeZone;
@@ -91,6 +92,11 @@ public class CurrentWeather {
 
         return (int)Math.round(mTemperature);
     }
+
+
+    public double getSunriseTime() {return mSunriseTime;}
+
+    public void setSunriseTime(double sunriseTime) {mSunriseTime = sunriseTime;}
 
     public void setTemperature(double temperature) {
         mTemperature = temperature;

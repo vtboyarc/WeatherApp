@@ -59,6 +59,7 @@ public class MainActivity extends ActionBarActivity {
     @InjectView(R.id.iconImageView) ImageView mIconImageView;
     @InjectView(R.id.refreshImageView) ImageView mRefreshImageView;
     @InjectView(R.id.progressBar) ProgressBar mProgressBar;
+    @InjectView(R.id.sunriseValue) TextView mSunriseValue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,11 +70,13 @@ public class MainActivity extends ActionBarActivity {
         textLat = (TextView)findViewById(R.id.textLat);
         textLong = (TextView)findViewById(R.id.textLong);
 
+
         LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
         LocationListener ll = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
                 if(location != null)
+
                 {
                     double pLong = location.getLongitude();
                     double pLat = location.getLatitude();
@@ -85,7 +88,9 @@ public class MainActivity extends ActionBarActivity {
                     mLatitude = pLat;
                     getForecast(mLatitude, mLongitude);
                 }
-            }
+
+                }
+
 
             @Override
             public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -104,21 +109,21 @@ public class MainActivity extends ActionBarActivity {
         };
 
 
-//this code down to before line 23 is new and worked without it
-
+//took this to line 123 out to test for gps always on bug, using only line 124 right now
         //exceptions will be thrown if provider is not permitted.
-        try{gps_enabled=lm.isProviderEnabled(LocationManager.GPS_PROVIDER);}catch(Exception ex){}
-        try{network_enabled=lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);}catch(Exception ex){}
+      // try{gps_enabled=lm.isProviderEnabled(LocationManager.GPS_PROVIDER);}catch(Exception ex){}
+       //try{network_enabled=lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);}catch(Exception ex){}
 
 
-        if(gps_enabled) {
-              lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 100, ll);
-        if(network_enabled)
-          lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 100, 100, ll);
+       // if(gps_enabled) {
+             // lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 100, ll);
+        //if(network_enabled)
+         // lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 100, 100, ll);
 
-    }
-       // lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10, 10, ll);
-        // lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10, 10, ll);
+   // }
+        lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 100, 100, ll);
+        // if update broke it, try un-commenting this line, comment out above line?
+        //lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10, 10, ll);
 
 
 
@@ -219,10 +224,12 @@ public class MainActivity extends ActionBarActivity {
 
     private void updateDisplay() {
         mTemperatureLabel.setText(mCurrentWeather.getTemperature() + "");
-        mTimeLabel.setText("At " + mCurrentWeather.getFormattedTime() + " it will be");
+        mTimeLabel.setText("At " + mCurrentWeather.getFormattedTime() + " it is:");
         mHumidityValue.setText(mCurrentWeather.getHumidity() + "");
         mPrecipValue.setText(mCurrentWeather.getPrecipChance() + "%");
         mSummaryLabel.setText(mCurrentWeather.getSummary());
+        mSunriseValue.setText(mCurrentWeather.getSunriseTime() + "");
+
 
         Drawable drawable = getResources().getDrawable(mCurrentWeather.getIconId());
         mIconImageView.setImageDrawable(drawable);
@@ -244,6 +251,8 @@ public class MainActivity extends ActionBarActivity {
         currentWeather.setPrecipChance(currently.getDouble("precipProbability"));
         currentWeather.setSummary(currently.getString("summary"));
         currentWeather.setTemperature(currently.getDouble("temperature"));
+        currentWeather.setSunriseTime(currently.getDouble("windSpeed"));
+       // currentWeather.setSunriseTime(currently.getDouble("windBearing"));
         currentWeather.setTimeZone(timezone);
 
         Log.d(TAG, currentWeather.getFormattedTime());

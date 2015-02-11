@@ -4,17 +4,18 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity"
-    android:background="#ff3a74ff">
+    android:background="#607D8B">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="--"
         android:id="@+id/temperatureLabel"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
         android:textColor="@android:color/white"
-        android:textSize="150sp" />
+        android:textSize="150sp"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/textView2"
+        android:layout_toStartOf="@+id/textView2"/>
 
     <TextView
         android:id="@+id/textLat"
@@ -24,7 +25,8 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:textSize="22dp"/>
+        android:textSize="22dp"
+        android:textColor="@android:color/white"/>
     <TextView
         android:id="@+id/textLong"
         android:layout_width="wrap_content"
@@ -33,7 +35,8 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:textSize="22dp"/>
+        android:textSize="22dp"
+        android:textColor="@android:color/white"/>
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -49,20 +52,20 @@
         android:layout_height="wrap_content"
         android:text="..."
         android:id="@+id/timeLabel"
+        android:textColor="#80ffffff"
+        android:textSize="18sp"
         android:layout_above="@+id/temperatureLabel"
         android:layout_centerHorizontal="true"
-        android:textColor="#80ffffff"
-        android:textSize="18sp" />
+        android:layout_marginBottom="45dp"/>
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/iconImageView"
         android:src="@drawable/cloudy_night"
-        android:layout_marginTop="41dp"
-        android:layout_below="@+id/refreshImageView"
-        android:layout_alignLeft="@+id/refreshImageView"
-        android:layout_alignStart="@+id/refreshImageView"/>
+        android:layout_below="@+id/linearLayout"
+        android:layout_alignLeft="@+id/progressBar"
+        android:layout_alignStart="@+id/progressBar"/>
 
     <LinearLayout
         android:orientation="horizontal"
@@ -86,7 +89,8 @@
                 android:text="Humidity"
                 android:id="@+id/humidityLabel"
                 android:textColor="#80ffffff"
-                android:gravity="center_horizontal" />
+                android:gravity="center_horizontal"
+                android:textSize="18dp"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -107,10 +111,11 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Rain/Snow"
+                android:text="Rain/Snow chance"
                 android:id="@+id/precipLabel"
                 android:textColor="#80ffffff"
-                android:gravity="center_horizontal" />
+                android:gravity="center_horizontal"
+                android:textSize="18dp"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -128,12 +133,12 @@
         android:layout_height="wrap_content"
         android:text="Getting current weather..."
         android:id="@+id/summaryLabel"
-        android:layout_below="@+id/linearLayout"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
         android:textColor="@android:color/white"
-        android:textSize="18dp"
-        android:gravity="center_horizontal"/>
+        android:textSize="20dp"
+        android:gravity="center_horizontal"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/timeLabel"
+        android:layout_toStartOf="@+id/timeLabel"/>
 
     <ImageView
         android:layout_width="wrap_content"
@@ -160,7 +165,8 @@
         android:textSize="18dp"
         android:layout_below="@+id/progressBar"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
+        android:layout_alignParentStart="true"
+        android:textColor="@android:color/white"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -171,5 +177,41 @@
         android:layout_alignTop="@+id/textView"
         android:layout_alignRight="@+id/linearLayout"
         android:layout_alignEnd="@+id/linearLayout"
-        android:textSize="18dp"/>
+        android:textSize="18dp"
+        android:textColor="@android:color/white"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Wind speed in mph:"
+        android:id="@+id/sunriseLabel"
+        android:textColor="#80ffffff"
+        android:textSize="18dp"
+        android:layout_below="@+id/iconImageView"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="--"
+        android:id="@+id/sunriseValue"
+        android:textColor="@android:color/white"
+        android:textSize="24sp"
+        android:layout_below="@+id/sunriseLabel"
+        android:layout_alignLeft="@+id/iconImageView"
+        android:layout_alignStart="@+id/iconImageView"/>
+
+
+    …
+    android:elevation="8dp" />
+
+
+
 </RelativeLayout>
