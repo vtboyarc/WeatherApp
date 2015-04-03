@@ -102,12 +102,18 @@ public class CurrentWeather {
         mTemperature = temperature;
     }
 
-    public double getHumidity() {
-        return mHumidity;
-    }
+    //commented this out for now while trying to change humidty to a percentage
+    //public double getHumidity() {
+       // return mHumidity;
+   // }
 
     public void setHumidity(double humidity) {
         mHumidity = humidity;
+    }
+
+    public int getHumidity() {
+        double humidityPercentage = mHumidity * 100;
+        return (int)Math.round(humidityPercentage);
     }
 
     public int getPrecipChance() {

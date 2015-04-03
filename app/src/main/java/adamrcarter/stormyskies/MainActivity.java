@@ -225,7 +225,7 @@ public class MainActivity extends ActionBarActivity {
     private void updateDisplay() {
         mTemperatureLabel.setText(mCurrentWeather.getTemperature() + "");
         mTimeLabel.setText("At " + mCurrentWeather.getFormattedTime() + " it is:");
-        mHumidityValue.setText(mCurrentWeather.getHumidity() + "");
+        mHumidityValue.setText(mCurrentWeather.getHumidity() + "%");
         mPrecipValue.setText(mCurrentWeather.getPrecipChance() + "%");
         mSummaryLabel.setText(mCurrentWeather.getSummary());
         mSunriseValue.setText(mCurrentWeather.getSunriseTime() + "");
